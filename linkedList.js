@@ -117,9 +117,30 @@ const LinkedList = () => {
     return string;
   };
 
-  // const insertAt = (value, index) => {
+  const insertAt = (value, index) => {
+    if (index < 0 || index > listSize) {
+      return;
+    } if (index === 0) {
+      // insert at index 0
+      prepend(value);
+    } else if (index === listSize) {
+      // insert right after last node
+      append(value);
+    } else {
+      // insert between two nodes
+      const newNode = Node();
+      newNode.value = value;
 
-  // };
+      const current = at(index);
+      const beforeCurrent = at(index - 1);
+
+      beforeCurrent.nextNode = newNode;
+      newNode.nextNode = current;
+
+      listSize += 1;
+    }
+  };
+
   // const removeAt = (index) => {
 
   // };
@@ -135,7 +156,7 @@ const LinkedList = () => {
     contains,
     find,
     toString,
-    // insertAt,
+    insertAt,
     // removeAt,
   };
 };
