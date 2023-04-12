@@ -30,6 +30,7 @@ const LinkedList = () => {
       const listTail = tail();
       listTail.nextNode = newNode;
     }
+
     listSize += 1;
   };
 
@@ -78,6 +79,7 @@ const LinkedList = () => {
 
   const contains = (value) => {
     let current = listHead;
+
     while (current !== null) {
       if (current.value === value) {
         return true;
@@ -103,6 +105,53 @@ const LinkedList = () => {
     return null;
   };
 
+  const insertAt = (value, index) => {
+    if (index < 0 || index > listSize) {
+      return;
+    }
+
+    if (index === 0) {
+      // insert at index 0
+      prepend(value);
+    } else if (index === listSize) {
+      // insert right after last node
+      append(value);
+    } else {
+      // insert between two nodes
+      const newNode = Node();
+      newNode.value = value;
+
+      const beforeCurrent = at(index - 1);
+      const current = beforeCurrent.nextNode;
+
+      beforeCurrent.nextNode = newNode;
+      newNode.nextNode = current;
+
+      listSize += 1;
+    }
+  };
+
+  const removeAt = (index) => {
+    if (index < 0 || index >= listSize) {
+      return null;
+    }
+
+    let toRemove;
+
+    if (index === 0) {
+      toRemove = listHead;
+      listHead = listHead.nextNode;
+    } else {
+      const beforeToRemove = at(index - 1);
+      toRemove = beforeToRemove.nextNode;
+      beforeToRemove.nextNode = toRemove.nextNode;
+    }
+
+    toRemove.nextNode = null;
+    listSize -= 1;
+    return toRemove;
+  };
+
   const toString = () => {
     let current = listHead;
     let string = '';
@@ -117,34 +166,6 @@ const LinkedList = () => {
     return string;
   };
 
-  const insertAt = (value, index) => {
-    if (index < 0 || index > listSize) {
-      return;
-    } if (index === 0) {
-      // insert at index 0
-      prepend(value);
-    } else if (index === listSize) {
-      // insert right after last node
-      append(value);
-    } else {
-      // insert between two nodes
-      const newNode = Node();
-      newNode.value = value;
-
-      const current = at(index);
-      const beforeCurrent = at(index - 1);
-
-      beforeCurrent.nextNode = newNode;
-      newNode.nextNode = current;
-
-      listSize += 1;
-    }
-  };
-
-  // const removeAt = (index) => {
-
-  // };
-
   return {
     head,
     tail,
@@ -157,7 +178,7 @@ const LinkedList = () => {
     find,
     toString,
     insertAt,
-    // removeAt,
+    removeAt,
   };
 };
 
