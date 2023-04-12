@@ -2,12 +2,21 @@ import Node from './node.js';
 
 const LinkedList = () => {
   let listHead = null;
-  let listTail = null;
   let listSize = 0;
 
   const head = () => listHead;
 
-  const tail = () => listTail;
+  const tail = () => {
+    let current = listHead;
+    let prev = null;
+
+    while (current !== null) {
+      prev = current;
+      current = current.nextNode;
+    }
+
+    return prev;
+  };
 
   const size = () => listSize;
 
@@ -17,10 +26,9 @@ const LinkedList = () => {
 
     if (listHead === null) {
       listHead = newNode;
-      listTail = newNode;
     } else {
+      const listTail = tail();
       listTail.nextNode = newNode;
-      listTail = newNode;
     }
     listSize += 1;
   };
@@ -29,13 +37,9 @@ const LinkedList = () => {
     const newNode = Node();
     newNode.value = value;
 
-    if (listHead === null) {
-      listHead = newNode;
-      listTail = newNode;
-    } else {
-      newNode.nextNode = listHead;
-      listHead = newNode;
-    }
+    newNode.nextNode = listHead;
+    listHead = newNode;
+
     listSize += 1;
   };
 
@@ -63,10 +67,9 @@ const LinkedList = () => {
 
     if (listSize === 1) {
       listHead = null;
-      listTail = null;
     } else if (listSize > 1) {
-      listTail = at(listSize - 2);
-      listTail.nextNode = null;
+      const newTail = at(listSize - 2);
+      newTail.nextNode = null;
     }
 
     listSize -= 1;
@@ -114,6 +117,13 @@ const LinkedList = () => {
     return string;
   };
 
+  // const insertAt = (value, index) => {
+
+  // };
+  // const removeAt = (index) => {
+
+  // };
+
   return {
     head,
     tail,
@@ -125,6 +135,8 @@ const LinkedList = () => {
     contains,
     find,
     toString,
+    // insertAt,
+    // removeAt,
   };
 };
 
