@@ -12,9 +12,11 @@
     },
     "rules": {
         "import/extensions": [
-            {
-              "js": "always"
-            }
-          ]
+          "error",
+          "ignorePackages",
+          {
+            "js": "always"
+          }
+        ]
     }
 }

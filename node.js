@@ -1,5 +1,6 @@
-function nodeHi() {
-  console.log('Node Hi');
-}
+const Node = () => ({
+  value: null,
+  nextNode: null,
+});
 
-export default nodeHi;
+export default Node;
